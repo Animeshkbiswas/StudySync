@@ -6,6 +6,7 @@ import {
   Scripts,
   ScrollRestoration,
 } from "react-router";
+import React from "react";
 
 import type { Route } from "./+types/root";
 import "./app.css";
@@ -23,9 +24,6 @@ export const links: Route.LinksFunction = () => [
   },
 ];
 
-import {registerLicense} from "@syncfusion/ej2-base";
-registerLicense(import.meta.env.VITE_SYNC_FUSION_LICENSE_KEY);
-
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
@@ -41,6 +39,13 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
+  React.useEffect(() => {
+    // Only register Syncfusion license on the client side
+    import("@syncfusion/ej2-base").then(({ registerLicense }) => {
+      registerLicense(import.meta.env.VITE_SYNC_FUSION_LICENSE_KEY);
+    });
+  }, []);
+
   return (
     <>
       <Meta />
